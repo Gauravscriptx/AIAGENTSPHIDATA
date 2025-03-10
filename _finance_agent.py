@@ -6,8 +6,8 @@ from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
-
-symbols = {
+def get_company_symbol(company: str) -> str:
+      symbols = {
         "Phidata": "MSFT",
         "Infosys": "INFY",
         "Tesla": "TSLA",
@@ -15,18 +15,18 @@ symbols = {
         "Microsoft": "MSFT",
         "Amazon": "AMZN",
         "Google": "GOOGL",
-}
-return symbols.get(company, "Unknown")
+       }
+      return symbols.get(company,"Unknown")
 # Get API Key from .env
 groq_api_key = os.getenv("GROQ_API_KEY")
 
 # Initialize the model with the API key
 agent = Agent(
     model=Groq(id="llama-3.3-70b-versatile", api_key=groq_api_key),
-    tools=[YFinanceTools(stock_price=True, analyst_recommendations=True, stock_fundamentals=True)],
+    tools=[YFinanceTools(stock_price=True, analyst_recommendations=True, stock_fundamentals=True), get_company_symbol],
     show_tool_calls=True,
     markdown=True,
-    instructions=["use tables to display data."]
+    instructions=["use tables to display data.", "If you need to find the symbol for a company, use the get_company_symbol tool."]
 )
 
 # Test the agent
