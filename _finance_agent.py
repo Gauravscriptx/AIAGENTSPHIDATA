@@ -7,6 +7,16 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
+symbols = {
+        "Phidata": "MSFT",
+        "Infosys": "INFY",
+        "Tesla": "TSLA",
+        "Apple": "AAPL",
+        "Microsoft": "MSFT",
+        "Amazon": "AMZN",
+        "Google": "GOOGL",
+}
+return symbols.get(company, "Unknown")
 # Get API Key from .env
 groq_api_key = os.getenv("GROQ_API_KEY")
 
